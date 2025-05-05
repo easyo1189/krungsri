@@ -97,37 +97,25 @@ export class PgStorage implements IStorage {
 
   async getUserByUsername(username: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(and(
-        eq(users.username, username),
-        eq(users.is_deleted, false)
-      ));
+      .where(eq(users.username, username));
     return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(and(
-        eq(users.email, email),
-        eq(users.is_deleted, false)
-      ));
+      .where(eq(users.email, email));
     return user;
   }
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(and(
-        eq(users.googleId, googleId),
-        eq(users.is_deleted, false)
-      ));
+      .where(eq(users.googleId, googleId));
     return user;
   }
 
   async getUserByFacebookId(facebookId: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(and(
-        eq(users.facebookId, facebookId),
-        eq(users.is_deleted, false)
-      ));
+      .where(eq(users.facebookId, facebookId));
     return user;
   }
 
