@@ -45,6 +45,18 @@ app.use((req, res, next) => {
     console.error("Migration failed but continuing startup:", error);
   }
   
+  // Initialize automatic backup system
+  try {
+    import("./simplified-backup-service").then(module => {
+      module.startAutomaticBackup();
+      log("Automatic backup system initialized", "backup");
+    }).catch(err => {
+      console.error("Failed to import backup module:", err);
+    });
+  } catch (backupError) {
+    console.error("Failed to initialize backup system:", backupError);
+  }
+  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
