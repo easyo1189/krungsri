@@ -47,10 +47,7 @@ export class PgStorage implements IStorage {
     try {
       // ตรวจสอบว่ามี admin user หรือยัง
       const adminUser = await db.select().from(users)
-        .where(and(
-          eq(users.isAdmin, true),
-          eq(users.is_deleted, false)
-        )).limit(1);
+        .where(eq(users.isAdmin, true)).limit(1);
       
       if (adminUser.length === 0) {
         // สร้าง admin user
@@ -66,7 +63,7 @@ export class PgStorage implements IStorage {
           adminRole: 'super_admin',
           canAccessSettings: true,
           isActive: true,
-          is_deleted: false
+          // is_deleted: false
         }).returning();
         
         log(`Admin user created with ID: ${admin.id}`, "storage");
@@ -140,8 +137,8 @@ export class PgStorage implements IStorage {
       insertUser.password = await hashPassword(insertUser.password);
     }
     
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...insertUser, is_deleted: false };
+    // กำหนดค่า is_deleted เป็น false (ปิดไว้เพราะยังไม่มีคอลัมน์นี้)
+    const values = { ...insertUser };
     
     const [user] = await db.insert(users).values(values).returning();
     return user;

@@ -6,7 +6,7 @@ import { Express } from "express";
 import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
-import { storage } from "./storage";
+import { pgStorage as storage } from "./pg-storage-updated";
 import { User as SelectUser } from "@shared/schema";
 import { log } from "./vite";
 
