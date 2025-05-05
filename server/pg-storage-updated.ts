@@ -462,77 +462,35 @@ export class PgStorage implements IStorage {
     return result[0];
   }
   
-  // Delete operations (soft delete)
+  // Delete operations - แทนที่ด้วยฟังก์ชันที่ป้องกันการลบข้อมูล
   async softDeleteUser(id: number): Promise<User | undefined> {
-    const result = await db.update(users)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(users.id, id))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าผู้ใช้ที่มีอยู่แทน
+    return await this.getUser(id);
   }
   
   async softDeleteLoan(id: number): Promise<Loan | undefined> {
-    const result = await db.update(loans)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(loans.id, id))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าเงินกู้ที่มีอยู่แทน
+    return await this.getLoan(id);
   }
   
   async softDeleteMessage(id: number): Promise<Message | undefined> {
-    const result = await db.update(messages)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(messages.id, id))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าข้อความที่มีอยู่แทน
+    return await this.getMessage(id);
   }
   
   async softDeleteNotification(id: number): Promise<Notification | undefined> {
-    const result = await db.update(notifications)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(notifications.id, id))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าการแจ้งเตือนที่มีอยู่แทน
+    return await this.getNotification(id);
   }
   
   async softDeleteAccount(userId: number): Promise<Account | undefined> {
-    const result = await db.update(accounts)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(accounts.userId, userId))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าบัญชีที่มีอยู่แทน
+    return await this.getAccount(userId);
   }
   
   async softDeleteWithdrawal(id: number): Promise<Withdrawal | undefined> {
-    const result = await db.update(withdrawals)
-      .set({
-        is_deleted: true,
-        deleted_at: new Date()
-      })
-      .where(eq(withdrawals.id, id))
-      .returning();
-    
-    return result[0];
+    // ป้องกันการลบข้อมูลโดยคืนค่าข้อมูลการถอนเงินที่มีอยู่แทน
+    return await this.getWithdrawal(id);
   }
 }
 
