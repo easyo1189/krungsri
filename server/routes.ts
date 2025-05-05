@@ -13,6 +13,7 @@ import path from "path";
 import fs from "fs";
 import adminDataRoutes from "./routes/admin-data";
 import restoreDataRoutes from "./routes/restore-data";
+import backupRoutes from "./backup-routes";
 
 // Set up multer storage
 const uploadDir = path.join(process.cwd(), 'uploads');
