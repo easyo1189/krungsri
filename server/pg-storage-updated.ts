@@ -148,7 +148,6 @@ export class PgStorage implements IStorage {
 
   async getAllUsers(): Promise<User[]> {
     return await db.select().from(users)
-      .where(eq(users.is_deleted, false))
       .orderBy(users.createdAt);
   }
 
@@ -191,35 +190,25 @@ export class PgStorage implements IStorage {
 
   async getAdmins(): Promise<User[]> {
     return await db.select().from(users)
-      .where(and(
-        eq(users.isAdmin, true),
-        eq(users.is_deleted, false)
-      ))
+      .where(eq(users.isAdmin, true))
       .orderBy(users.createdAt);
   }
 
   // Loan operations
   async getLoan(id: number): Promise<Loan | undefined> {
     const [loan] = await db.select().from(loans)
-      .where(and(
-        eq(loans.id, id),
-        eq(loans.is_deleted, false)
-      ));
+      .where(eq(loans.id, id));
     return loan;
   }
 
   async getLoansByUserId(userId: number): Promise<Loan[]> {
     return await db.select().from(loans)
-      .where(and(
-        eq(loans.userId, userId),
-        eq(loans.is_deleted, false)
-      ))
+      .where(eq(loans.userId, userId))
       .orderBy(desc(loans.createdAt));
   }
 
   async getAllLoans(): Promise<Loan[]> {
     return await db.select().from(loans)
-      .where(eq(loans.is_deleted, false))
       .orderBy(desc(loans.createdAt));
   }
 
@@ -237,10 +226,7 @@ export class PgStorage implements IStorage {
         ...updates,
         updatedAt: new Date()
       })
-      .where(and(
-        eq(loans.id, id),
-        eq(loans.is_deleted, false)
-      ))
+      .where(eq(loans.id, id))
       .returning();
     
     return result[0];
@@ -249,31 +235,24 @@ export class PgStorage implements IStorage {
   // Message operations
   async getMessage(id: number): Promise<Message | undefined> {
     const [message] = await db.select().from(messages)
-      .where(and(
-        eq(messages.id, id),
-        eq(messages.is_deleted, false)
-      ));
+      .where(eq(messages.id, id));
     return message;
   }
 
   async getMessagesBetweenUsers(user1Id: number, user2Id: number): Promise<Message[]> {
     return await db.select().from(messages)
-      .where(and(
+      .where(
         or(
           and(eq(messages.senderId, user1Id), eq(messages.receiverId, user2Id)),
           and(eq(messages.senderId, user2Id), eq(messages.receiverId, user1Id))
-        ),
-        eq(messages.is_deleted, false)
-      ))
+        )
+      )
       .orderBy(messages.createdAt);
   }
 
   async getUserMessages(userId: number): Promise<Message[]> {
     return await db.select().from(messages)
-      .where(and(
-        or(eq(messages.senderId, userId), eq(messages.receiverId, userId)),
-        eq(messages.is_deleted, false)
-      ))
+      .where(or(eq(messages.senderId, userId), eq(messages.receiverId, userId)))
       .orderBy(messages.createdAt);
   }
 
@@ -292,10 +271,7 @@ export class PgStorage implements IStorage {
         isRead: true,
         readAt: now
       })
-      .where(and(
-        eq(messages.id, id),
-        eq(messages.is_deleted, false)
-      ))
+      .where(eq(messages.id, id))
       .returning();
     
     return result[0];
