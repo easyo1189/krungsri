@@ -280,19 +280,13 @@ export class PgStorage implements IStorage {
   // Notification operations
   async getNotification(id: number): Promise<Notification | undefined> {
     const [notification] = await db.select().from(notifications)
-      .where(and(
-        eq(notifications.id, id),
-        eq(notifications.is_deleted, false)
-      ));
+      .where(eq(notifications.id, id));
     return notification;
   }
 
   async getUserNotifications(userId: number): Promise<Notification[]> {
     return await db.select().from(notifications)
-      .where(and(
-        eq(notifications.userId, userId),
-        eq(notifications.is_deleted, false)
-      ))
+      .where(eq(notifications.userId, userId))
       .orderBy(desc(notifications.createdAt));
   }
 
@@ -307,10 +301,7 @@ export class PgStorage implements IStorage {
   async markNotificationAsRead(id: number): Promise<Notification | undefined> {
     const result = await db.update(notifications)
       .set({ isRead: true })
-      .where(and(
-        eq(notifications.id, id),
-        eq(notifications.is_deleted, false)
-      ))
+      .where(eq(notifications.id, id))
       .returning();
     
     return result[0];
@@ -319,10 +310,7 @@ export class PgStorage implements IStorage {
   // Account operations
   async getAccount(userId: number): Promise<Account | undefined> {
     const [account] = await db.select().from(accounts)
-      .where(and(
-        eq(accounts.userId, userId),
-        eq(accounts.is_deleted, false)
-      ));
+      .where(eq(accounts.userId, userId));
     return account;
   }
 
@@ -340,10 +328,7 @@ export class PgStorage implements IStorage {
         ...updates,
         updatedAt: new Date()
       })
-      .where(and(
-        eq(accounts.userId, userId),
-        eq(accounts.is_deleted, false)
-      ))
+      .where(eq(accounts.userId, userId))
       .returning();
     
     return result[0];
@@ -366,10 +351,7 @@ export class PgStorage implements IStorage {
         balance: newBalance,
         updatedAt: new Date()
       })
-      .where(and(
-        eq(accounts.userId, userId),
-        eq(accounts.is_deleted, false)
-      ))
+      .where(eq(accounts.userId, userId))
       .returning();
     
     return result[0];
@@ -378,25 +360,18 @@ export class PgStorage implements IStorage {
   // Withdrawal operations
   async getWithdrawal(id: number): Promise<Withdrawal | undefined> {
     const [withdrawal] = await db.select().from(withdrawals)
-      .where(and(
-        eq(withdrawals.id, id),
-        eq(withdrawals.is_deleted, false)
-      ));
+      .where(eq(withdrawals.id, id));
     return withdrawal;
   }
 
   async getUserWithdrawals(userId: number): Promise<Withdrawal[]> {
     return await db.select().from(withdrawals)
-      .where(and(
-        eq(withdrawals.userId, userId),
-        eq(withdrawals.is_deleted, false)
-      ))
+      .where(eq(withdrawals.userId, userId))
       .orderBy(desc(withdrawals.createdAt));
   }
 
   async getAllWithdrawals(): Promise<Withdrawal[]> {
     return await db.select().from(withdrawals)
-      .where(eq(withdrawals.is_deleted, false))
       .orderBy(desc(withdrawals.createdAt));
   }
 
@@ -414,10 +389,7 @@ export class PgStorage implements IStorage {
         ...updates,
         updatedAt: new Date()
       })
-      .where(and(
-        eq(withdrawals.id, id),
-        eq(withdrawals.is_deleted, false)
-      ))
+      .where(eq(withdrawals.id, id))
       .returning();
     
     return result[0];
