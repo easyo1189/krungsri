@@ -33,6 +33,8 @@ export const users = pgTable("users", {
   googleId: text("google_id").unique(),
   facebookId: text("facebook_id").unique(),
   authProvider: text("auth_provider"), // 'local', 'google', 'facebook'
+  isDeleted: boolean("is_deleted").default(false).notNull(),
+  deletedAt: timestamp("deleted_at")
 });
 
 export const insertUserSchema = createInsertSchema(users)

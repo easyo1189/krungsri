@@ -88,10 +88,7 @@ export class PgStorage implements IStorage {
   // User operations
   async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(and(
-        eq(users.id, id),
-        eq(users.is_deleted, false)
-      ));
+      .where(eq(users.id, id));
     return user;
   }
 
