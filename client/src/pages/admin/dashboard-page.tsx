@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import AdminSidebar from "@/components/admin-sidebar";
 import { useAuth } from "@/hooks/use-auth";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useLocation } from "wouter";
