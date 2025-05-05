@@ -69,7 +69,6 @@ export default function ChatInterface({
   const handleSendMessage = () => {
     if (selectedFile) {
       handleSendFile();
-      // เด้งไปยังลิงค์ Line หลังการส่งไฟล์
       return;
     }
     
@@ -81,8 +80,6 @@ export default function ChatInterface({
       
       if (success) {
         setNewMessage("");
-        // เด้งไปยังลิงค์ Line หลังการส่งข้อความ
-        window.open('https://line.me/ti/p/~oeasy2', '_blank');
       }
     }
   };
