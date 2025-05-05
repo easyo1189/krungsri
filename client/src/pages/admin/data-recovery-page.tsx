@@ -250,7 +250,7 @@ export default function DataRecoveryPage() {
               </CardDescription>
             </div>
             <Button 
-              variant="primary"
+              variant="default"
               className="bg-green-600 hover:bg-green-700 text-white"
               size="lg"
               onClick={() => confirmRestore(

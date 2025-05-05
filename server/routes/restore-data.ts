@@ -76,7 +76,7 @@ router.post('/api/admin/restore/user/:id', isSuperAdmin, async (req: Request, re
       return res.status(400).json({ success: false, message: 'รหัสผู้ใช้ไม่ถูกต้อง' });
     }
     
-    await db.execute(`SELECT restore_user_by_id($1)`, [userId]);
+    await db.execute(`SELECT restore_user_by_id(${userId});`);
     res.json({ success: true, message: `ข้อมูลผู้ใช้ ID ${userId} ถูกกู้คืนเรียบร้อยแล้ว` });
   } catch (error) {
     log(`Error restoring user: ${error}`, 'api');
