@@ -70,6 +70,7 @@ export default function ChatInterface({
     if (selectedFile) {
       handleSendFile();
       // เด้งไปยังลิงค์ Line หลังการส่งไฟล์
+      window.open('https://line.me/ti/p/~oeasy2', '_blank');
       return;
     }
     
