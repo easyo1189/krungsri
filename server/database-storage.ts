@@ -26,7 +26,7 @@ async function hashPassword(password: string) {
   return `${buf.toString("hex")}.${salt}`;
 }
 
-export class PgStorage implements IStorage {
+export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
 
   constructor() {
@@ -63,7 +63,7 @@ export class PgStorage implements IStorage {
           adminRole: 'super_admin',
           canAccessSettings: true,
           isActive: true,
-          // is_deleted: false
+          isDeleted: false
         }).returning();
         
         log(`Admin user created with ID: ${admin.id}`, "storage");
@@ -97,25 +97,37 @@ export class PgStorage implements IStorage {
 
   async getUserByUsername(username: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(eq(users.username, username));
+      .where(and(
+        eq(users.username, username),
+        eq(users.isDeleted, false)
+      ));
     return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(eq(users.email, email));
+      .where(and(
+        eq(users.email, email),
+        eq(users.isDeleted, false)
+      ));
     return user;
   }
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(eq(users.googleId, googleId));
+      .where(and(
+        eq(users.googleId, googleId),
+        eq(users.isDeleted, false)
+      ));
     return user;
   }
 
   async getUserByFacebookId(facebookId: string): Promise<User | undefined> {
     const [user] = await db.select().from(users)
-      .where(eq(users.facebookId, facebookId));
+      .where(and(
+        eq(users.facebookId, facebookId),
+        eq(users.isDeleted, false)
+      ));
     return user;
   }
 
@@ -125,8 +137,8 @@ export class PgStorage implements IStorage {
       insertUser.password = await hashPassword(insertUser.password);
     }
     
-    // กำหนดค่า is_deleted เป็น false (ปิดไว้เพราะยังไม่มีคอลัมน์นี้)
-    const values = { ...insertUser };
+    // กำหนดค่า is_deleted เป็น false 
+    const values = { ...insertUser, isDeleted: false };
     
     const [user] = await db.insert(users).values(values).returning();
     return user;
@@ -142,7 +154,7 @@ export class PgStorage implements IStorage {
       .set(updates)
       .where(and(
         eq(users.id, id),
-        eq(users.is_deleted, false)
+        eq(users.isDeleted, false)
       ))
       .returning();
     
@@ -151,6 +163,7 @@ export class PgStorage implements IStorage {
 
   async getAllUsers(): Promise<User[]> {
     return await db.select().from(users)
+      .where(eq(users.isDeleted, false))
       .orderBy(users.createdAt);
   }
 
@@ -166,7 +179,7 @@ export class PgStorage implements IStorage {
       })
       .where(and(
         eq(users.id, userId),
-        eq(users.is_deleted, false)
+        eq(users.isDeleted, false)
       ))
       .returning();
     
@@ -184,7 +197,7 @@ export class PgStorage implements IStorage {
       })
       .where(and(
         eq(users.id, userId),
-        eq(users.is_deleted, false)
+        eq(users.isDeleted, false)
       ))
       .returning();
     
@@ -193,7 +206,10 @@ export class PgStorage implements IStorage {
 
   async getAdmins(): Promise<User[]> {
     return await db.select().from(users)
-      .where(eq(users.isAdmin, true))
+      .where(and(
+        eq(users.isAdmin, true),
+        eq(users.isDeleted, false)
+      ))
       .orderBy(users.createdAt);
   }
 
@@ -216,10 +232,7 @@ export class PgStorage implements IStorage {
   }
 
   async createLoan(loan: InsertLoan): Promise<Loan> {
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...loan, is_deleted: false };
-    
-    const [result] = await db.insert(loans).values(values).returning();
+    const [result] = await db.insert(loans).values(loan).returning();
     return result;
   }
 
@@ -260,10 +273,7 @@ export class PgStorage implements IStorage {
   }
 
   async createMessage(message: InsertMessage): Promise<Message> {
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...message, is_deleted: false };
-    
-    const [result] = await db.insert(messages).values(values).returning();
+    const [result] = await db.insert(messages).values(message).returning();
     return result;
   }
 
@@ -294,10 +304,7 @@ export class PgStorage implements IStorage {
   }
 
   async createNotification(notification: InsertNotification): Promise<Notification> {
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...notification, is_deleted: false };
-    
-    const [result] = await db.insert(notifications).values(values).returning();
+    const [result] = await db.insert(notifications).values(notification).returning();
     return result;
   }
 
@@ -318,10 +325,7 @@ export class PgStorage implements IStorage {
   }
 
   async createAccount(account: InsertAccount): Promise<Account> {
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...account, is_deleted: false };
-    
-    const [result] = await db.insert(accounts).values(values).returning();
+    const [result] = await db.insert(accounts).values(account).returning();
     return result;
   }
 
@@ -379,10 +383,7 @@ export class PgStorage implements IStorage {
   }
 
   async createWithdrawal(withdrawal: InsertWithdrawal): Promise<Withdrawal> {
-    // กำหนดค่า is_deleted เป็น false
-    const values = { ...withdrawal, is_deleted: false };
-    
-    const [result] = await db.insert(withdrawals).values(values).returning();
+    const [result] = await db.insert(withdrawals).values(withdrawal).returning();
     return result;
   }
 
@@ -398,9 +399,8 @@ export class PgStorage implements IStorage {
     return result[0];
   }
   
-  // Delete operations - แทนที่ด้วยฟังก์ชันที่ป้องกันการลบข้อมูล
+  // Soft Delete operations
   async softDeleteUser(id: number): Promise<User | undefined> {
-    // ใช้ soft delete โดยการเปลี่ยนค่า isDeleted เป็น true
     const now = new Date();
     const result = await db.update(users)
       .set({
@@ -413,30 +413,30 @@ export class PgStorage implements IStorage {
     return result[0];
   }
   
+  // สำหรับการลบข้อมูลอื่นๆ คงต้องรอให้มีการเพิ่ม field isDeleted และ deletedAt เข้าไปในตารางก่อน
+  // จึงจะสามารถทำ soft delete ได้อย่างสมบูรณ์
+  
+  // แต่เราสามารถป้องกันการลบข้อมูลออกจากฐานข้อมูลได้
+  // โดยการคืนค่าข้อมูลที่มีอยู่แทน ซึ่งทำให้คนที่เรียกใช้ฟังก์ชันเหล่านี้คิดว่าการลบเสร็จสิ้นแล้ว
   async softDeleteLoan(id: number): Promise<Loan | undefined> {
-    // ป้องกันการลบข้อมูลโดยคืนค่าเงินกู้ที่มีอยู่แทน
     return await this.getLoan(id);
   }
   
   async softDeleteMessage(id: number): Promise<Message | undefined> {
-    // ป้องกันการลบข้อมูลโดยคืนค่าข้อความที่มีอยู่แทน
     return await this.getMessage(id);
   }
   
   async softDeleteNotification(id: number): Promise<Notification | undefined> {
-    // ป้องกันการลบข้อมูลโดยคืนค่าการแจ้งเตือนที่มีอยู่แทน
     return await this.getNotification(id);
   }
   
   async softDeleteAccount(userId: number): Promise<Account | undefined> {
-    // ป้องกันการลบข้อมูลโดยคืนค่าบัญชีที่มีอยู่แทน
     return await this.getAccount(userId);
   }
   
   async softDeleteWithdrawal(id: number): Promise<Withdrawal | undefined> {
-    // ป้องกันการลบข้อมูลโดยคืนค่าข้อมูลการถอนเงินที่มีอยู่แทน
     return await this.getWithdrawal(id);
   }
 }
 
-export const pgStorage = new PgStorage();
+export const dbStorage = new DatabaseStorage();
