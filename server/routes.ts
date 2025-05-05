@@ -2,7 +2,7 @@ import type { Express, Request, Response, NextFunction } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer } from "ws";
-import { storage } from "./storage";
+import { pgStorage as storage } from "./pg-storage-updated";
 import { setupAuth } from "./auth";
 import { Account, insertLoanSchema, insertMessageSchema, insertNotificationSchema, insertWithdrawalSchema, User } from "@shared/schema";
 import { z } from "zod";
