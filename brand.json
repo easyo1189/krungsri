@@ -1,0 +1,150 @@
+{
+  "siteName": "CashLuxe",
+  "logoUrl": "data:image/jpeg;base64,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",
+  "siteDescription": "บริการเงินกู้ออนไลน์ รวดเร็ว ปลอดภัย น่าเชื่อถือ",
+  "footerText": "© 2025 CashLuxe - บริการเงินกู้ออนไลน์",
+  "login": {
+    "logoIcon": "https://www.dpa.or.th/storage/uploads/bank/dpa_bank_krungsri@2x.png",
+    "mainTitle": "Krungsri IFIN",
+    "subTitle": "สินเชื่อ › ส่วนบุคคล สมัครออนไลน์ง่ายๆ ได้เงินเร็ว — ดอกเบี้ยพิเศษต่ำสุดเพียง 9.99% ต่อปี* 3 เดือนแรก ไม่ต้องใช้หลักทรัพย์ หรือบุคคลค้ำประกัน สินเชื่อส่วนบุคคลกรุงศรี ดอกเบี้ยต่ำ เงินก้อนใหญ่ผ่อนจ่ายสบายสูงสุด 60 เดือน* ผ่อนสบายสูงสุด 60 เดือน ไม่ต้องใช้หลักทรัพย์ ยื่นกู้ง่ายทุกที่ กู้ผ่านแอป รู้ผลไวใน1วัน* วงเงินสูงสุด 2 ล้านบาท",
+    "backgroundColor": "#5d4a4a",
+    "headerText": "เข้าสู่ระบบกรุงศรี",
+    "buttonColor": "#ffd008",
+    "buttonTextColor": "#000000"
+  },
+  "homePage": {
+    "headerBackgroundColor": "#5d4a4a",
+    "bannerSlides": [
+      {
+        "id": 1,
+        "imageUrl": "https://www.krungsri.com/getmedia/c9a94bc3-328d-4800-8c48-65ae856e5536/debt-clinic-banner-tiein-m.webp.aspx",
+        "title": "สินเชื่อส่วนบุคคล",
+        "description": "วงเงินสูงสุด 2 ล้านบาท ดอกเบี้ยเริ่มต้น 9.99% ต่อปี",
+        "buttonText": "สมัครเลย",
+        "buttonLink": "/loan",
+        "backgroundColor": "#e6b54a"
+      },
+      {
+        "id": 2,
+        "imageUrl": "https://www.krungsri.com/getmedia/bb1ac10c-423a-4450-beaa-7ce00de93b61/ifin-personal-credit-promotion-krungsri-ifin-jan2025.webp.aspx",
+        "title": "รู้ผลอนุมัติไว",
+        "description": "ยื่นกู้ผ่านแอป รู้ผลไวใน 1 วัน ไม่ต้องใช้หลักทรัพย์",
+        "buttonText": "เช็ควงเงิน",
+        "buttonLink": "/loan",
+        "backgroundColor": "#16a5a3"
+      },
+      {
+        "id": 3,
+        "imageUrl": "https://www.krungsri.com/getmedia/08a95892-2d80-48f0-a76b-e6fd9f7ee4cc/ifin-personal-credit-promotion-ploan-get-bag-jan2025.webp.aspx",
+        "title": "ไม่บอก",
+        "description": "เงินก้อนใหญ่ผ่อนจ่ายสบายสูงสุด 60 เดือน",
+        "buttonText": "ดูรายละเอียด",
+        "buttonLink": "/chat",
+        "backgroundColor": "#5d4a4a"
+      }
+    ],
+    "navigationTabs": [
+      {
+        "id": 1,
+        "label": "หน้าหลัก",
+        "icon": "Home",
+        "link": "/"
+      },
+      {
+        "id": 2,
+        "label": "ยื่นกู้",
+        "icon": "DollarSign",
+        "link": "/loan"
+      },
+      {
+        "id": 3,
+        "label": "จัดการเงิน",
+        "icon": "BanknoteIcon",
+        "link": "/withdrawal"
+      },
+      {
+        "id": 4,
+        "label": "แชท",
+        "icon": "MessageSquare",
+        "link": "/chat"
+      },
+      {
+        "id": 5,
+        "label": "โปรไฟล์",
+        "icon": "User",
+        "link": "/profile"
+      }
+    ]
+  },
+  "fonts": {
+    "family": "'Sukhumvit Set', 'Noto Sans Thai', sans-serif",
+    "size": {
+      "base": 16,
+      "h1": 32,
+      "h2": 24,
+      "h3": 20,
+      "small": 14
+    },
+    "color": {
+      "primary": "#1a2b42",
+      "secondary": "#4b5563",
+      "muted": "#6b7280"
+    },
+    "weight": {
+      "normal": 400,
+      "medium": 500,
+      "bold": 700
+    }
+  },
+  "loanPage": {
+    "headerBackgroundColor": "#5d4a4a",
+    "minLoanAmount": 50000,
+    "maxLoanAmount": 5000000,
+    "minLoanTerm": 1,
+    "maxLoanTerm": 64,
+    "interestRate": 4.5,
+    "formLabelColor": "#6b7280",
+    "formInputBorderColor": "#e5e7eb",
+    "formInputBgColor": "#ffffff",
+    "buttonColor": "#ffd008",
+    "buttonTextColor": "#000000"
+  },
+  "withdrawalPage": {
+    "balanceCardBgFrom": "#5d4a4a",
+    "balanceCardBgTo": "#5d4a4a",
+    "balanceCardTextColor": "#FFCC33",
+    "tabActiveColor": "#FFCC33",
+    "tabTextColor": "#5d4a4a",
+    "bankFormHeaderBgFrom": "#5d4a4a",
+    "bankFormHeaderBgTo": "#5d4a4a",
+    "withdrawFormHeaderBgFrom": "#5d4a4a",
+    "withdrawFormHeaderBgTo": "#5d4a4a",
+    "bankButtonBgFrom": "#5d4a4a",
+    "bankButtonBgTo": "#5d4a4a",
+    "bankButtonTextColor": "#FFCC33",
+    "withdrawButtonBgFrom": "#5d4a4a",
+    "withdrawButtonBgTo": "#5d4a4a",
+    "withdrawButtonTextColor": "#FFCC33"
+  },
+  "colors": {
+    "headerBackground": "#5d4a4a",
+    "headerText": "#ffffff",
+    "primaryButtonBackground": "#ffd008",
+    "primaryButtonText": "#000000",
+    "secondaryButtonBackground": "#e0e0e0",
+    "secondaryButtonText": "#333333",
+    "bottomNavigationBackground": "#5d4a4a",
+    "bottomNavigationText": "#fffdf5",
+    "bottomNavigationActiveText": "#ffd008",
+    "bottomNavigationActiveIcon": "#5d4a4a",
+    "bottomNavigationBorder": "#e5e7eb",
+    "cardBackground": "#ffffff",
+    "cardBorder": "#e5e7eb",
+    "cardHeaderBackground": "#f9fafb",
+    "cardTitle": "#1a2942",
+    "successColor": "#10b981",
+    "warningColor": "#f59e0b",
+    "errorColor": "#ef4444",
+    "infoColor": "#3b82f6"
+  }
+}
