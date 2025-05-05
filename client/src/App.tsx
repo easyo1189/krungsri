@@ -17,6 +17,7 @@ import AdminDashboardPage from "@/pages/admin/dashboard-page";
 import AdminChatPage from "@/pages/admin/chat-page";
 import AdminSettingsPage from "@/pages/admin/settings-page";
 import AdminManagementPage from "@/pages/admin/admin-management-page";
+import DataRecoveryPage from "@/pages/admin/data-recovery-page";
 import EasyPage from "@/pages/easy-page";
 // เอาการนำเข้าหน้า users-list และ user-view ออกแล้ว
 import { ProtectedRoute, AdminRoute } from "@/lib/protected-route";
@@ -44,6 +45,7 @@ function Router() {
       <AdminRoute path="/admin/chat" component={AdminChatPage} />
       <AdminRoute path="/admin/settings" component={AdminSettingsPage} />
       <AdminRoute path="/admin/management" component={AdminManagementPage} />
+      <AdminRoute path="/admin/data-recovery" component={DataRecoveryPage} />
       {/* เส้นทางไปยังหน้า users-list และ user-view ถูกลบออกแล้ว */}
       <Route component={NotFound} />
     </Switch>
